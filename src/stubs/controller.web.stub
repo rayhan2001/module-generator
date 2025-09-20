@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\{{Model}}Request;
+use App\Repositories\{{Model}}Repository;
+use Illuminate\Http\Request;
+
+class {{Model}}Controller extends Controller
+{
+    public function __construct(
+        protected {{Model}}Repository $repository
+    ) {}
+
+    public function index(Request $request)
+    {
+        $data['title'] = _trans('title.All ' . \Illuminate\Support\Str::plural('{{Model}}'));
+        $data['collection'] = $this->repository->paginateData($request);
+        return view('{{kebab_plural}}.index')->with($data);
+    }
+
+    public function create()
+    {
+        $data['title'] = _trans('title.Create {{Model}}');
+        return view('{{kebab_plural}}.create')->with($data);
+    }
+
+    public function store({{Model}}Request $request)
+    {
+        $this->repository->store($request->validated());
+        return redirect()->route('{{kebab_plural}}.index')->with('success', _trans('message.Created successfully'));
+    }
+
+    public function edit($id)
+    {
+        $data['title'] = _trans('title.Edit {{Model}}');
+        $data['item'] = $this->repository->find($id);
+        return view('{{kebab_plural}}.edit')->with($data);
+    }
+
+    public function update({{Model}}Request $request, $id)
+    {
+        $this->repository->update($id, $request->validated());
+        return redirect()->route('{{kebab_plural}}.index')->with('success', _trans('message.Updated successfully'));
+    }
+
+    public function destroy($id)
+    {
+        $this->repository->delete($id);
+        return redirect()->route('{{kebab_plural}}.index')->with('success', _trans('message.Deleted successfully'));
+    }
+}

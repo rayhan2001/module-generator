@@ -1,0 +1,13 @@
+// Module: {{module}}
+use App\Http\Controllers\{{Model}}Controller;
+
+Route::controller({{Model}}Controller::class)
+    ->prefix('{{module}}')
+    ->as('{{module}}.')
+    ->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/{id}', 'show')->name('show');
+        Route::put('/update/{id}', 'update')->name('update');
+        Route::delete('/delete/{id}', 'destroy')->name('destroy');
+    });

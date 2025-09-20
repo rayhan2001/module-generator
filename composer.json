@@ -1,0 +1,18 @@
+{
+    "name": "rayhan2001/module-generator",
+    "description": "Laravel CRUD Module Generator (API + Web)",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Rayhan2001\\ModuleGenerator\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Rayhan2001\\ModuleGenerator\\ModuleServiceProvider"
+            ]
+        }
+    }
+}

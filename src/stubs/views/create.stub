@@ -1,0 +1,12 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
+        <h1>Create {{ Model }}</h1>
+        <form action="{{ route('{{kebab_plural}}.store') }}" method="POST">
+            @csrf
+            @include('{{kebab_plural}}._form')
+            <button class="btn btn-primary">Save</button>
+        </form>
+    </div>
+@endsection

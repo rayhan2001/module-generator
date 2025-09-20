@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Models\{{Model}};
+
+class {{Model}}Repository
+{
+    public function __construct(
+        protected {{Model}} $model
+    ) {}
+
+    public function paginateData($request)
+    {
+        return $this->model->latest('id')->paginate($request->limit ?? 10);
+    }
+
+    public function store(array $data)
+    {
+        return $this->model->create($data);
+    }
+
+    public function show($id)
+    {
+        return $this->model->findOrFail($id);
+    }
+
+    public function update($id, array $data)
+    {
+        $item = $this->find($id);
+        $item->update($data);
+        return $item;
+    }
+
+    public function delete($id)
+    {
+        $item = $this->find($id);
+        return $item->delete();
+    }
+}

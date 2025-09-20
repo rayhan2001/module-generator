@@ -1,0 +1,38 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
+        <h1>{{ Model }} List</h1>
+        <a href="{{ route('{{kebab_plural}}.create') }}" class="btn btn-primary">Create New</a>
+
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Slug</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($collection as $item)
+                    <tr>
+                        <td>{{ $item->id }}</td>
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->slug }}</td>
+                        <td>
+                            <a href="{{ route('{{kebab_plural}}.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                            <form action="{{ route('{{kebab_plural}}.destroy', $item->id) }}" method="POST" style="display:inline">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger" onclick="return confirm('Delete?')">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        {{ $collection->links() }}
+    </div>
+@endsection

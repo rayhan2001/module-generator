@@ -1,0 +1,41 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Repositories\{{Model}}Repository;
+use Illuminate\Http\Request;
+
+class {{Model}}Controller extends Controller
+{
+    public function __construct(
+        protected {{Model}}Repository $repository
+    ) {}
+
+    public function index(Request $request)
+    {
+        return response()->json($this->repository->paginateData($request));
+    }
+
+    public function store(Request $request)
+    {
+        $item = $this->repository->store($request->all());
+        return response()->json($item, 201);
+    }
+
+    public function show($id)
+    {
+        return response()->json($this->repository->find($id));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $item = $this->repository->update($id, $request->all());
+        return response()->json($item);
+    }
+
+    public function destroy($id)
+    {
+        $this->repository->delete($id);
+        return response()->json(['message' => 'Deleted']);
+    }
+}
