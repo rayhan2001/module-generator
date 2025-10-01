@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Requests\{{studly}}Request;
+use App\Repositories\{{studly}}Repository;
+use Illuminate\Http\Request;
+
+class {{studly}}Controller extends Controller
+{
+    public function __construct(
+        protected {{studly}}Repository $repository
+    ) {}
+
+    public function index(Request $request)
+    {
+        $data['title'] = 'All ' . \Illuminate\Support\Str::plural('{{studly}}');
+        $data['collection'] = $this->repository->paginateData($request);
+        return view('{{pluralLower}}.index')->with($data);
+    }
+
+    public function create()
+    {
+        $data['title'] = 'Create {{studly}}';
+        return view('{{pluralLower}}.create')->with($data);
+    }
+
+    public function store({{studly}}Request $request)
+    {
+        $this->repository->store($request->validated());
+        return redirect()->route('{{pluralLower}}.index')->with('success', 'Created successfully');
+    }
+
+    public function edit($id)
+    {
+        $data['title'] = 'Edit {{studly}}';
+        $data['item'] = $this->repository->find($id);
+        return view('{{pluralLower}}.edit')->with($data);
+    }
+
+    public function update({{studly}}Request $request, $id)
+    {
+        $this->repository->update($id, $request->validated());
+        return redirect()->route('{{pluralLower}}.index')->with('success', 'Updated successfully');
+    }
+
+    public function destroy($id)
+    {
+        $this->repository->delete($id);
+        return redirect()->route('{{pluralLower}}.index')->with('success', 'Deleted successfully');
+    }
+}

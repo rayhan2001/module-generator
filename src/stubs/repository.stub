@@ -1,0 +1,49 @@
+<?php
+
+namespace App\Repositories;
+
+use App\Models\{{studly}};
+
+class {{studly}}Repository
+{
+    public function __construct(
+        protected {{studly}} $model
+    ) {}
+
+    public function paginateData($request)
+    {
+        return $this->model->latest('id')->paginate($request->limit ?? 10);
+    }
+
+    public function store(array $data)
+    {
+        return $this->model->create($data);
+    }
+
+    public function find($id)
+    {
+        return $this->model->findOrFail($id);
+    }
+
+    public function update($id, array $payload)
+    {
+        $record = $this->model->findOrFail($id);
+
+        if ($record) {
+            return $record->update($payload);
+        }
+
+        return false;
+    }
+
+    public function delete($id)
+    {
+        $record = $this->model->findOrFail($id);
+
+        if ($record) {
+            return $record->delete();
+        }
+
+        return false;
+    }
+}

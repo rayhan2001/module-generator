@@ -1,0 +1,12 @@
+@extends('layouts.app')
+@section('title', @$title)
+@section('content')
+    <div class="container-fluid">
+        <form action="{{ route('{{pluralLower}}.update', $item->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            @include('{{pluralLower}}.form')
+            <button class="btn btn-primary">Update</button>
+        </form>
+    </div>
+@endsection
